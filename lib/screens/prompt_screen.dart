@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../brick_colors.dart';
+
 /// Shows the generated prompt and runs the countdown after the user taps Go.
 class PromptScreen extends StatefulWidget {
   const PromptScreen({
@@ -57,7 +59,6 @@ class _PromptScreenState extends State<PromptScreen> {
           _isRunning = false;
           _timer?.cancel();
           _timer = null;
-          // Show dialog after this frame so we are not inside setState's build.
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (!mounted) return;
             _showTimeUpDialog();
@@ -73,13 +74,36 @@ class _PromptScreenState extends State<PromptScreen> {
       barrierDismissible: false,
       builder: (dialogContext) {
         return AlertDialog(
-          content: const Text("Time's up!"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          backgroundColor: Colors.white,
+          content: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.timer_off_rounded, color: BrickColors.red, size: 32),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  "Time's up!",
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        color: BrickColors.ink,
+                      ),
+                ),
+              ),
+            ],
+          ),
           actions: [
-            TextButton(
+            FilledButton(
               onPressed: () {
                 Navigator.of(dialogContext).pop();
                 Navigator.of(context).pop();
               },
+              style: FilledButton.styleFrom(
+                backgroundColor: BrickColors.blue,
+                foregroundColor: Colors.white,
+              ),
               child: const Text('OK'),
             ),
           ],
@@ -102,37 +126,93 @@ class _PromptScreenState extends State<PromptScreen> {
       appBar: AppBar(
         title: const Text('Build'),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              Expanded(
-                child: Center(
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              BrickColors.surfaceTint,
+              BrickColors.yellow.withValues(alpha: 0.12),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Text(
+                        widget.prompt,
+                        textAlign: TextAlign.center,
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  height: 1.25,
+                                  color: BrickColors.ink,
+                                  fontSize: 26,
+                                ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: BrickColors.blue.withValues(alpha: 0.25),
+                      width: 2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: BrickColors.blue.withValues(alpha: 0.1),
+                        blurRadius: 14,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
                   child: Text(
-                    widget.prompt,
+                    _formatTime(_remainingSeconds),
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w600,
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1,
+                          color: BrickColors.blue,
+                          fontSize: 52,
                         ),
                   ),
                 ),
-              ),
-              Text(
-                _formatTime(_remainingSeconds),
-                style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: _isRunning ? null : _startCountdown,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: BrickColors.yellow,
+                      foregroundColor: BrickColors.ink,
+                      disabledBackgroundColor:
+                          BrickColors.yellow.withValues(alpha: 0.45),
                     ),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _isRunning ? null : _startCountdown,
-                  child: Text(_isRunning ? 'Running...' : 'Go'),
+                    child: Text(
+                      _isRunning ? 'Running...' : 'Go',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
