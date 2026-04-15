@@ -71,6 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
           _isRunning = false;
           _timer?.cancel();
           _timer = null;
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Time's up!"),
+              duration: Duration(seconds: 5),
+            ),
+          );
         }
       });
     });
