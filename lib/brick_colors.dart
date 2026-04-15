@@ -7,4 +7,5 @@ abstract final class BrickColors {
   static const Color blue = Color(0xFF0071BC);
   static const Color ink = Color(0xFF1A1A2E);
   static const Color surfaceTint = Color(0xFFF5F7FF);
+  static const Color green = Color(0xFF22B14C);
 }
