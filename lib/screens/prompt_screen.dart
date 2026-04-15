@@ -128,91 +128,96 @@ class _PromptScreenState extends State<PromptScreen> {
       ),
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              BrickColors.surfaceTint,
-              BrickColors.yellow.withValues(alpha: 0.12),
-            ],
-          ),
-        ),
+        color: const Color(0xFFE5E5E7),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: SingleChildScrollView(
-                      child: Text(
-                        widget.prompt,
-                        textAlign: TextAlign.center,
-                        style:
-                            Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                  height: 1.25,
-                                  color: BrickColors.ink,
-                                  fontSize: 26,
-                                ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: BrickColors.blue.withValues(alpha: 0.25),
-                      width: 2,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: BrickColors.blue.withValues(alpha: 0.1),
-                        blurRadius: 14,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
-                  ),
-                  child: Text(
-                    _formatTime(_remainingSeconds),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 1,
-                          color: BrickColors.blue,
-                          fontSize: 52,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final oneThird = constraints.maxHeight / 3;
+              return Stack(
+                children: [
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: oneThird - 75,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 28),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            color: BrickColors.blue,
+                            width: 4,
+                          ),
                         ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: FilledButton(
-                    onPressed: _isRunning ? null : _startCountdown,
-                    style: FilledButton.styleFrom(
-                      backgroundColor: BrickColors.yellow,
-                      foregroundColor: BrickColors.ink,
-                      disabledBackgroundColor:
-                          BrickColors.yellow.withValues(alpha: 0.45),
-                    ),
-                    child: Text(
-                      _isRunning ? 'Running...' : 'Go',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 22,
+                          ),
+                          child: SingleChildScrollView(
+                            child: Text(
+                              widget.prompt,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(
+                                context,
+                              ).textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                height: 1.25,
+                                color: BrickColors.blue,
+                                fontSize: 26,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      _formatTime(_remainingSeconds),
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1,
+                            color: Colors.black,
+                            fontSize: 52,
+                          ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: oneThird - 50,
+                    child: Center(
+                      child: SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: FilledButton(
+                          onPressed: _isRunning ? null : _startCountdown,
+                          style: FilledButton.styleFrom(
+                            shape: const CircleBorder(),
+                            backgroundColor: const Color(0xFF22B14C),
+                            foregroundColor: Colors.white,
+                            disabledBackgroundColor: const Color(0xFF9ADAAE),
+                            padding: EdgeInsets.zero,
+                          ),
+                          child: const Text(
+                            'GO',
+                            style: TextStyle(
+                              fontSize: 39,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
