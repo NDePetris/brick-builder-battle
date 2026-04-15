@@ -98,16 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
-              Text(
-                'Round length',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      color: BrickColors.ink,
-                    ),
-              ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 30),
               Text(
                 'Pick a timer, then generate your build challenge.',
                 textAlign: TextAlign.center,
@@ -137,8 +128,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.fromLTRB(12, 16, 12, 16),
                   child: Row(
                     children: [
-                      _timerChoiceButton('30s', 30, BrickColors.yellow),
-                      _timerChoiceButton('1m', 60, BrickColors.red),
+                      _timerChoiceButton('30s', 30, BrickColors.blue),
+                      _timerChoiceButton('1m', 60, BrickColors.blue),
                       _timerChoiceButton('2m', 120, BrickColors.blue),
                     ],
                   ),
