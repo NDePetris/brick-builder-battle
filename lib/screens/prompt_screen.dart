@@ -87,19 +87,22 @@ class _PromptScreenState extends State<PromptScreen> {
             borderRadius: BorderRadius.circular(20),
           ),
           backgroundColor: Colors.white,
+          actionsAlignment: MainAxisAlignment.center,
           content: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(Icons.timer_off_rounded, color: BrickColors.red, size: 32),
               const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  "Time's up!",
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.w800,
-                        color: BrickColors.ink,
-                      ),
-                ),
+              Text(
+                "Time's up!",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: BrickColors.ink,
+                      fontSize: 32,
+                    ),
               ),
             ],
           ),
@@ -213,8 +216,8 @@ class _PromptScreenState extends State<PromptScreen> {
                             shape: const CircleBorder(),
                             backgroundColor:
                                 _isRunning
-                                    ? const Color(0xFFE31B23)
-                                    : const Color(0xFF22B14C),
+                                    ? BrickColors.red
+                                    : BrickColors.green,
                             foregroundColor: Colors.white,
                             padding: EdgeInsets.zero,
                           ),

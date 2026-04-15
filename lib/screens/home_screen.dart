@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Center(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    maxHeight: 120,
+                    maxHeight: 240,
                     maxWidth: width * 0.88,
                   ),
                   child: Image.asset(
@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
               FilledButton(
                 onPressed: _generatePromptAndGo,
                 style: FilledButton.styleFrom(
-                  backgroundColor: BrickColors.red,
+                  backgroundColor: BrickColors.green,
                   foregroundColor: Colors.white,
                 ),
                 child: const Text('Generate Prompt'),
