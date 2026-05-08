@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: Row(
           children: [
-            _timerChoiceButton('30s', 30, BrickColors.blue),
+            _timerChoiceButton('5s', 5, BrickColors.blue),
             _timerChoiceButton('1m', 60, BrickColors.red),
             _timerChoiceButton('2m', 120, BrickColors.yellow),
           ],

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../brick_colors.dart';
+import 'photo_picker_screen.dart';
 
 /// Shows the generated prompt and runs the countdown after the user taps Go.
 class PromptScreen extends StatefulWidget {
@@ -165,20 +166,48 @@ class _PromptScreenState extends State<PromptScreen> {
                     ),
               ),
               const SizedBox(height: 8),
-              Text(
-                'Show off your build!',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: BrickColors.ink.withValues(alpha: 0.75),
-                      fontWeight: FontWeight.w600,
+              OutlinedButton(
+                onPressed: () {
+                  // Close the dialog first, then navigate to PhotoPickerScreen
+                  // to allow the user to select and confirm their build photo.
+                  Navigator.of(dialogContext).pop();
+                  Navigator.of(context).push<void>(
+                    MaterialPageRoute<void>(
+                      builder: (context) => PhotoPickerScreen(
+                        prompt: widget.prompt,
+                        durationSeconds: widget.durationSeconds,
+                      ),
                     ),
+                  );
+                },
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: BrickColors.blue,
+                  side: BorderSide(
+                    color: BrickColors.blue.withValues(alpha: 0.5),
+                    width: 2,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                ),
+                child: const Text(
+                  'Show off your build!',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
+                ),
               ),
             ],
           ),
           actions: [
             FilledButton(
               onPressed: () {
-                // Close the dialog first, then return to the previous screen.
+                // Close the dialog and return to the home screen.
                 Navigator.of(dialogContext).pop();
                 Navigator.of(context).pop();
               },
@@ -195,7 +224,7 @@ class _PromptScreenState extends State<PromptScreen> {
                 elevation: 2,
               ),
               child: const Text(
-                'OK',
+                'Back to Home',
                 style: TextStyle(
                   fontWeight: FontWeight.w800,
                   fontSize: 16,
